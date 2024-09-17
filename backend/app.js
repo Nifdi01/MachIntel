@@ -1,11 +1,17 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const userRoute = require('./routes/userRoute');
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+app.use(express.json());
 
-app.listen(port, () => {
-  console.log(`Bro is listening to http://localhost:${port}`);
+app.use('/users', userRoute);
+
+const errorHandler = require('./middleware/errorHandler');
+
+app.use(errorHandler);
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, ()=>{
+    console.log(`Bro is listening to http://localhost:${PORT}`);
 });
